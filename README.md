@@ -635,7 +635,3 @@ return view('store', [
 >    MVC bukan sekadar folder, tapi pola pikir memisahkan concern.
 
 ---
-
-*Documentation generated for ISB02303403 - Web Design and Development*  
-*Week 6.1 | Even Semester 2025/2026 | UC eLearn*
-```
