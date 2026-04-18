@@ -1,23 +1,27 @@
 <?php
-use Illuminate\Support\Facades\Route;
+// File: routes/web.php
+// Route mendefinisikan URL pattern dan handler-nya
 
-Route::get('/', function () {
-    // dd() = "Dump and Die" → tool debugging Laravel
-    // Menampilkan isi variabel lalu STOP eksekusi (berguna untuk cek data)
-    dd('Hello World!');  // ← Coba akses http://webdev.test, akan muncul teks ini
-});
+use Illuminate\Support\Facades\Route; // Import facade Route dari Laravel
 
+// ✅ Route 1: Return string langsung (untuk testing cepat)
+// Ketika user buka: http://webdev6.1.test/hi
+// Laravel akan menampilkan teks "Hi All!"
+Route::get('/hi', function () {
+    // return string = output langsung ke browser
+    return "Hi All!"; 
+})->name('hi'); // ->name() = "Named Route" (memberi nama unik untuk referensi URL nanti)
+
+// ✅ Route 2: Route lain dengan nama berbeda
+// Akses: http://webdev6.1.test/hello
+Route::get('/hello', function () {
+    return "Hello All!";
+})->name('hello');
+
+// ✅ Route 3: Mengarahkan ke View (akan kita buat di Tutorial 2)
+// Akses: http://webdev6.1.test/home
 Route::get('/home', function () {
-    return view('home');  // ← Memanggil resources/views/home.blade.php
-})->name('home');  // ← Named route: memudahkan referensi URL di kode
-
-// Contoh penggunaan dd() untuk debugging:
-
-Route::get('/test', function () {
-    $data = ['name' => 'Budi', 'age' => 20];
-    
-    dd($data);  // ← Akan menampilkan isi $data dalam format rapi, lalu STOP
-    
-    // Kode di bawah ini TIDAK akan dijalankan:
+    // view('home') = Laravel otomatis cari file: resources/views/home.blade.php
+    // Jika file tidak ada, akan error "View [home] not found"
     return view('home');
-});
+})->name('home');
