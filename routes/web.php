@@ -1,27 +1,37 @@
 <?php
 // File: routes/web.php
-// Route mendefinisikan URL pattern dan handler-nya
 
-use Illuminate\Support\Facades\Route; // Import facade Route dari Laravel
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FirstController; // ← Import Controller baru
 
-// ✅ Route 1: Return string langsung (untuk testing cepat)
-// Ketika user buka: http://webdev6.1.test/hi
-// Laravel akan menampilkan teks "Hi All!"
-Route::get('/hi', function () {
-    // return string = output langsung ke browser
-    return "Hi All!"; 
-})->name('hi'); // ->name() = "Named Route" (memberi nama unik untuk referensi URL nanti)
+// ... (route sebelumnya tetap ada) ...
 
-// ✅ Route 2: Route lain dengan nama berbeda
-// Akses: http://webdev6.1.test/hello
-Route::get('/hello', function () {
-    return "Hello All!";
-})->name('hello');
+// ✅ Route Parameter WAJIB: User HARUS mengisi {param1} dan {param2}
+// Contoh URL: http://webdev6.1-6.2.test/math/sum/10/5
+Route::get('/math/sum/{param1}/{param2}', [FirstController::class, 'sum'])
+    ->name('math.sum');
 
-// ✅ Route 3: Mengarahkan ke View (akan kita buat di Tutorial 2)
-// Akses: http://webdev6.1.test/home
-Route::get('/home', function () {
-    // view('home') = Laravel otomatis cari file: resources/views/home.blade.php
-    // Jika file tidak ada, akan error "View [home] not found"
-    return view('home');
-})->name('home');
+// ✅ Route Parameter OPSIONAL: {param2} boleh kosong (pakai tanda ?)
+// Contoh URL: http://webdev6.1-6.2.test/math/sub/10/3  ATAU  http://webdev6.1-6.2.test/math/sub/10
+Route::get('/math/sub/{param1}/{param2?}', [FirstController::class, 'sub'])
+    ->name('math.sub');
+
+// ✅ Route memanggil HomeController (Best Practice)
+// Kita pindahkan logika view('home') ke dalam Controller
+Route::get('/home', [HomeController::class, 'show'])->name('home');
+
+// ✅ Route untuk halaman Store
+// Closure sederhana untuk render view tanpa controller dulu
+Route::get('/store', function () {
+    // view('store') → Laravel otomatis cari file: resources/views/store.blade.php
+    return view('store'); 
+})->name('store'); 
+// ↑ ->name('store') = Named route, memungkinkan pemanggilan route('store') di header
+
+// ✅ Route untuk halaman About
+Route::get('/about', function () {
+    // view('about') → Laravel otomatis cari file: resources/views/about.blade.php
+    return view('about');
+})->name('about');
+// ↑ ->name('about') = Named route, memungkinkan pemanggilan route('about') di header

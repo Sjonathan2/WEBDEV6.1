@@ -1,31 +1,37 @@
 {{-- File: resources/views/home.blade.php --}}
-{{-- Blade comment: tidak akan tampil di browser, hanya untuk developer --}}
+{{-- @extends: mewarisi layout dari base.blade.php --}}
+{{-- Path 'base.base' artinya: folder base/ → file base.blade.php --}}
+@extends('base.base')
 
-<!DOCTYPE html>
-<!-- Attribute lang untuk aksesibilitas & SEO -->
-<html lang="en">
-<head>
-    {{-- Meta charset: encoding karakter UTF-8 (dukung emoji, simbol) --}}
-    <meta charset="UTF-8">
-    
-    {{-- Viewport: agar halaman responsif di mobile --}}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    {{-- X-UA-Compatible: mode rendering terbaik di IE/Edge --}}
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-    {{-- Title halaman: tampil di tab browser --}}
-    <title>Home Page</title>
-</head>
-<body>
-    {{-- Heading utama halaman --}}
-    <h1>My Home Page</h1>
-    
-    {{-- Paragraf sambutan --}}
-    <p>Selamat datang di halaman Home Laravel! 🚀</p>
-    
-    {{-- Contoh output variabel Blade (akan kita pakai nanti) --}}
-    {{-- {{ $variable }} = output dengan auto-escape (aman dari XSS) --}}
-    {{-- {!! $variable !!} = output tanpa escape (hati-hati, bisa XSS!) --}}
-</body>
-</html>
+{{-- @section('title'): override title default di <head> base layout --}}
+@section('title', 'Home - ISB Commerce')
+
+{{-- @section('content'): mengisi slot @yield('content') di base layout --}}
+@section('content')
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Selamat Datang di ISB Commerce</h1>
+        <p class="lead text-muted">Platform pembelajaran Sistem Informasi Bisnis</p>
+    </div>
+
+    {{-- Card produk contoh (data statis dari Controller sebelumnya) --}}
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Produk: {{ $product_name ?? 'Logitech Superlight' }}</h5>
+                    <p class="card-text text-muted">Kategori: {{ $product_category ?? 'Mouse' }}</p>
+                    {{-- Output raw HTML untuk tombol --}}
+                    <p>{!! $button ?? '<button class="btn btn-primary">Beli Sekarang</button>' !!}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm bg-light">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <p class="mb-0 text-muted">Area konten dinamis lainnya akan ditampilkan di sini.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
