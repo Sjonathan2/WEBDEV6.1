@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StoreController;
 use App\Models\ProductCategory;
+use App\Http\Controllers\ProductController;
 
 Route::get('/home', function () {
     // withCount(['products']) otomatis menambah kolom virtual 'products_count'
@@ -24,3 +25,5 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 // ↑ ->name('about') = Named route, memungkinkan pemanggilan route('about') di header
+
+Route::resource('products', ProductController::class);

@@ -17,6 +17,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}" href="{{ route('products.index') }}">Products</a>
+        </li>
+        
         {{-- Menu Home: class 'active' muncul otomatis jika route saat ini bernama 'home' --}}
         {{-- request()->routeIs('home') return boolean true/false --}}
         <li class="nav-item">
