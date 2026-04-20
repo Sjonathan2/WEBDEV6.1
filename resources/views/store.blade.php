@@ -6,24 +6,39 @@
 @section('content')
     <div class="text-center mb-5">
         <h1 class="display-5 fw-bold">Halaman Store</h1>
-        <p class="lead text-muted">Daftar produk akan ditampilkan di sini.</p>
+        <p class="lead text-muted">Daftar produk tersedia (Stok > 0)</p>
     </div>
 
-    <div class="card p-4 shadow-sm">
-        <h5 class="card-title">Contoh Gambar Produk (Storage)</h5>
+    {{-- Grid layout Bootstrap: 3 kolom di desktop, 1 kolom di mobile --}}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         
-        {{-- ✅ OPSI 2: Gambar dari folder /storage/app/public/images --}}
-        {{-- Setelah storage:link, Laravel buat symlink: public/storage → storage/app/public --}}
-        {{-- Jadi path akses di browser WAJIB diawali 'storage/' --}}
-        {{-- asset('storage/images/foto.jpeg') → http://site.test/storage/images/foto.jpeg --}}
-        <img src="{{ asset('storage/images/foto.jpeg') }}" 
-             class="img-fluid rounded shadow mb-3" 
-             alt="Dynamic Product - Storage Folder">
+        {{-- Loop setiap produk yang dikirim dari Controller --}}
+        @foreach($products as $product)
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        {{-- Akses kolom biasa: $product->name --}}
+                        <h5 class="card-title">{{ $product->name }}</h5>
+                        
+                        {{-- Akses Relasi: $product->product_category->name --}}
+                        {{-- Laravel otomatis join tabel karena kita sudah definisi belongsTo --}}
+                        <p class="card-text text-muted">
+                            <i>{{ $product->product_category->name }}</i>
+                        </p>
+                        
+                        {{-- Format harga dengan number_format --}}
+                        <p class="card-text fw-bold">
+                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                        </p>
+                        
+                        {{-- Tampilkan deskripsi/detail --}}
+                        <p class="card-text">{{ $product->description }}</p>
+                        
+                        <span class="badge bg-success">Stok: {{ $product->stock }}</span>
+                    </div>
+                </div>
+            </div>
+        @endforeach
         
-        <span class="badge bg-primary">Opsi 2: /storage/app/public/images</span>
-        <p class="text-muted small mt-2">
-            File fisik ada di: <code>storage/app/public/images/</code><br>
-            Akses web lewat: <code>public/storage/images/</code> (symlink)
-        </p>
     </div>
 @endsection

@@ -34,4 +34,18 @@
             </div>
         </div>
     </div>
+    <h3 class="mb-4">Kategori Produk & Jumlah Item</h3>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach($product_categories as $category)
+        <div class="col">
+            <div class="card text-center p-3">
+                <h5 class="card-title">{{ $category->name }}</h5>
+                <p class="card-text text-muted">{{ $category->description }}</p>
+                
+                {{-- Akses hasil withCount: $category->products_count --}}
+                <p class="fw-bold">Total Produk: {{ $category->products_count }}</p>
+            </div>
+        </div>
+    @endforeach
+</div>
 @endsection
